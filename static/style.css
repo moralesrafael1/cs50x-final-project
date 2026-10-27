@@ -1,0 +1,225 @@
+/* =============================================================  
+ MERIDIAN — Layout Base e Sistema de Design
+ ============================================================= */
+
+:root {
+  /* ---- Cores ---- */
+  --ink-950: #0a0b0d;
+  --ink-900: #121316;
+  --ink-800: #1b1d21;
+  --ink-700: #26282d;
+  --ink-600: #3a3d43;
+
+  --steel-100: #f3f4f5;
+  --steel-300: #c7cbd1;
+  --steel-400: #9ba0a8;
+  --steel-500: #6f747c;
+
+  --silver-grad: linear-gradient(135deg, #e9ebee 0%, #b7bcc4 45%, #8b909a 100%);
+  --silver-grad-hover: linear-gradient(135deg, #ffffff 0%, #c9cdd3 45%, #9ca1ab 100%);
+
+  --panel-bg: #f5f5f4;
+  --panel-border: #e2e3e1;
+  --panel-ink: #16171a;
+  --panel-ink-soft: #6b6d72;
+
+  /* ---- Tipografia ---- */
+  --font-display: 'Space Grotesk', 'Arial Narrow', sans-serif;
+  --font-body: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+
+  /* ---- Dimensões e Bordas ---- */
+  --max-width: 1180px;
+  --radius-lg: 22px;
+  --radius-md: 14px;
+  --radius-sm: 9px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  margin: 0;
+  background: var(--ink-950);
+  color: var(--steel-100);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  line-height: 1.5;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centraliza os cartões e formulários no meio da tela */
+  width: 100%; /* Garante que ocupe toda a largura disponível */
+  padding: 24px 20px; /* Cria a margem de respiro de 20px nas laterais e 24px no topo/fundo */
+  box-sizing: border-box; 
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+}
+
+/* Textura metálica sutil de fundo */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(ellipse 900px 500px at 50% -10%, rgba(199, 203, 209, 0.10), transparent 60%),
+    repeating-linear-gradient(115deg, rgba(255,255,255,0.015) 0px, rgba(255,255,255,0.015) 1px, transparent 1px, transparent 3px);
+}
+
+/* =====================================================
+ HEADER E BARRA DE NAVEGAÇÃO
+ ===================================================== */
+
+.site-header {
+  position: relative;
+  z-index: 10;
+  border-bottom: 1px solid var(--ink-800);
+  background: rgba(10, 11, 13, 0.85);
+  backdrop-filter: blur(12px);
+  width: 100%;
+}
+
+.header-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 18px 32px;
+  display: flex;
+  flex-direction: row; /* Garante que fiquem na mesma linha */
+  align-items: center;
+  justify-content: space-between; /* Joga a Logo para a esquerda e o Nav para a direita */
+  gap: 32px;
+}
+
+/* Logo Meridian */
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: 19px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  color: var(--steel-100);
+  flex-shrink: 0;
+}
+
+.logo-mark {
+  width: 20px;
+  height: 20px;
+  border-radius: 6px;
+  background: var(--silver-grad);
+  position: relative;
+}
+
+.logo-mark::after {
+  content: '';
+  position: absolute;
+  inset: 5px;
+  border-radius: 3px;
+  background: var(--ink-950);
+}
+
+/* Pílula de Navegação (Home / Login) */
+.main-nav {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  background: var(--ink-900);
+  border: 1px solid var(--ink-800);
+  border-radius: 999px;
+  padding: 4px;
+}
+
+.nav-link {
+  padding: 8px 20px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--steel-400);
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.nav-link:hover {
+  color: var(--steel-100);
+}
+
+.nav-link--active {
+  background: var(--ink-700);
+  color: var(--steel-100) !important;
+}
+
+/* Menu Mobile Toggle */
+.nav-toggle {
+  display: none;
+  background: none;
+  border: none;
+  width: 32px;
+  height: 32px;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+}
+
+.nav-toggle span {
+  display: block;
+  height: 2px;
+  background: var(--steel-100);
+  border-radius: 2px;
+}
+
+/* =====================================================
+ FOOTER
+ ===================================================== */
+
+.site-footer {
+  border-top: 1px solid var(--ink-800);
+  padding: 24px 32px;
+  margin-top: auto;
+}
+
+.footer-inner {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  font-size: 13px;
+  color: var(--steel-500);
+  text-align: center;
+}
+
+/* =====================================================
+ RESPONSIVIDADE
+ ===================================================== */
+
+@media (max-width: 768px) {
+  .header-inner {
+    padding: 16px 20px;
+    flex-wrap: wrap; /* Permite que os itens quebrem a linha se não houver espaço */
+    justify-content: space-between; 
+  }
+  
+  /* Mantém a navbar com aparência de pílula, mas centralizada abaixo da logo no mobile */
+  .main-nav {
+    width: 100%;
+    justify-content: center;
+    margin-top: 10px; 
+  }
+}

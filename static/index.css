@@ -1,0 +1,122 @@
+.about-section {
+    max-width: var(--max-width);
+    margin: 0 auto;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+.section-title {
+    font-family: var(--font-display);
+    font-size: clamp(24px, 5vw, 32px); /* Responsividade na fonte */
+    font-weight: 700;
+    text-align: center;
+    margin-bottom: 48px;
+    color: var(--steel-100);
+}
+
+.section-title span {
+    background: var(--silver-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.features-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+    gap: 24px;
+    margin-bottom: 60px;
+    justify-items: center; /* Centraliza os cartões no grid */
+}
+
+.feature-card {
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius-lg);
+    padding: 32px;
+    text-align: center; /* Texto centralizado */
+    color: var(--panel-ink);
+    box-shadow: 0 1px 0 rgba(255,255,255,0.6) inset, 0 15px 30px -10px rgba(0,0,0,0.3);
+    transition: transform 0.2s ease;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza o conteúdo interno flex */
+}
+
+.feature-card:hover {
+    transform: translateY(-5px);
+}
+
+.feature-icon {
+    font-size: 40px;
+    margin-bottom: 16px;
+    display: flex;
+    justify-content: center;
+}
+
+.feature-title {
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 12px;
+    color: var(--ink-950);
+    text-align: center;
+}
+
+.feature-text {
+    font-size: 14.5px;
+    color: var(--panel-ink-soft);
+    line-height: 1.6;
+    text-align: center;
+}
+
+.how-it-works {
+    background: var(--ink-900);
+    border: 1px solid var(--ink-800);
+    border-radius: var(--radius-lg);
+    padding: 48px 20px;
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.steps-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    margin-top: 40px;
+}
+
+.step-item {
+    flex: 1;
+    min-width: 200px;
+    max-width: 300px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Centraliza o conteúdo da etapa */
+    text-align: center;
+}
+
+.step-number {
+    width: 48px;
+    height: 48px;
+    background: var(--silver-grad);
+    color: var(--ink-950);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 20px;
+    margin: 0 auto 16px;
+}
+
+.cta-container {
+    text-align: center;
+    padding: 40px 20px 80px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}

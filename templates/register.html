@@ -1,0 +1,62 @@
+{% extends "layout.html" %}
+
+{% block title %}Criar Conta — Controle Financeiro{% endblock %}
+
+{% block head %}
+<!-- Inserindo o CSS modular específico para as páginas de autenticação -->
+<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-inner">
+        <h1 class="hero-title">CRIE SUA<br>CONTA</h1>
+        <p class="hero-subtitle">
+            Junte-se a nós e automatize a gestão das suas finanças com Inteligência Artificial.
+        </p>
+
+        <!-- Utilizamos a base do converter-card com a classe modificadora auth-card do login.css -->
+        <div class="converter-card auth-card">
+            <form action="{{ url_for('register') }}" method="POST">
+                
+                <div class="auth-field">
+                    <label for="username">Username</label>
+                    <div class="auth-input-wrapper">
+                        <input type="text" id="name" name="name" placeholder="Como deseja ser chamado?" required>
+                    </div>
+                </div>
+
+                <div class="auth-field">
+                    <label for="email">E-mail</label>
+                    <div class="auth-input-wrapper">
+                        <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+                    </div>
+                </div>
+
+                <div class="auth-field">
+                    <label for="password">Senha</label>
+                    <div class="auth-input-wrapper">
+                        <input type="password" id="password" name="password" placeholder="Crie uma senha forte" required>
+                    </div>
+                </div>
+
+                <div class="auth-field" style="margin-bottom: 24px;">
+                    <label for="confirm_password">Confirmar Senha</label>
+                    <div class="auth-input-wrapper">
+                        <input type="password" id="confirm_password" name="confirm_password" placeholder="Repita a senha" required>
+                    </div>
+                </div>
+
+                <div class="converter-actions">
+                    <button type="submit" class="btn btn--convert" style="width: 100%;">Cadastrar</button>
+                </div>
+
+            </form>
+
+            <div class="auth-footer">
+                Já tem uma conta? <a href="{{ url_for('login') }}">Faça login</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

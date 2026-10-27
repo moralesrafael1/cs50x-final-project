@@ -1,0 +1,53 @@
+{% extends "layout.html" %}
+
+{% block title %}Login — Meridian{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='login') }}">
+{% endblock %}
+
+{% block content %}
+<section class="hero">
+    <div class="hero-inner">
+        <h1 class="hero-title">ACESSE SUA<br>CONTA</h1>
+        <p class="hero-subtitle">
+            Entre para visualizar Dashboard completo do seu padrão de gastos.
+        </p>
+
+        <div class="converter-card" style="max-width: 420px;">
+            <form action="{{ url_for('login') }}" method="POST">
+                
+                <div class="converter-field" style="margin-bottom: 20px;">
+                    <label for="email">E-mail ou Usuário</label>
+                    <div class="field-row">
+                        <input type="email" id="email" name="email" placeholder="seu@email.com" required style="font-size: 15px; font-family: var(--font-body);">
+                    </div>
+                </div>
+
+                <div class="converter-field" style="margin-bottom: 18px;">
+                    <label for="password">Senha</label>
+                    <div class="field-row">
+                        <input type="password" id="password" name="password" placeholder="••••••••" required style="font-size: 15px; font-family: var(--font-body);">
+                    </div>
+                </div>
+
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; font-size: 13px;">
+                    <label style="display: flex; align-items: center; gap: 8px; color: var(--panel-ink-soft); cursor: pointer;">
+                        <input type="checkbox" name="remember" style="accent-color: var(--ink-800);"> Lembrar de mim
+                    </label>
+                    <a href="#" style="color: var(--panel-ink-soft); text-decoration: underline;">Esqueceu a senha?</a>
+                </div>
+
+                <div class="converter-actions">
+                    <button type="submit" class="btn btn--convert" style="width: 100%;">Entrar</button>
+                </div>
+
+            </form>
+
+            <div style="margin-top: 24px; text-align: center; font-size: 13.5px; color: var(--panel-ink-soft);">
+                Não tem uma conta? <a href="{{ url_for('register') }}" style="color: var(--panel-ink); font-weight: 600; text-decoration: underline;">Cadastre-se</a>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

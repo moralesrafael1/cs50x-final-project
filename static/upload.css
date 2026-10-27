@@ -1,0 +1,137 @@
+.upload-section {
+    width: 100%;
+    max-width: 540px;
+    /* Alinhado com o tamanho dos cartões do layout */
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+/* Caixa de Resumo (Antiga .caixa) */
+.caixa {
+    width: 100%;
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius-lg);
+    padding: 28px 24px;
+    margin-bottom: 32px;
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 15px 30px -10px rgba(0, 0, 0, 0.3);
+    color: var(--panel-ink);
+    text-align: center;
+}
+
+.p3 {
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--panel-ink-soft);
+    margin-bottom: 4px;
+}
+
+.p4 {
+    font-family: var(--font-display);
+    font-size: 40px;
+    font-weight: 700;
+    margin: 0 0 8px;
+    color: var(--ink-950);
+    letter-spacing: -0.02em;
+}
+
+.p5 {
+    font-size: 13px;
+    color: var(--panel-ink-soft);
+}
+
+/* Área de Upload */
+.upload {
+    width: 100%;
+    margin-bottom: 40px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+.botao-tracejado {
+    display: block;
+    width: 100%;
+    background: rgba(255, 255, 255, 0.03);
+    border: 2px dashed var(--steel-500);
+    border-radius: var(--radius-md);
+    padding: 40px 20px;
+    color: var(--steel-100);
+    font-family: var(--font-body);
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.botao-tracejado:hover {
+    background: rgba(255, 255, 255, 0.08);
+    border-color: var(--steel-300);
+    transform: translateY(-2px);
+}
+
+.upload-icon {
+    font-size: 28px;
+    display: block;
+    margin-bottom: 12px;
+}
+
+/* Container e Cards de Resultado gerados pelo JS */
+#resultado-container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.card-comprovante {
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius-md);
+    padding: 24px;
+    text-align: left;
+    color: var(--panel-ink);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+}
+
+.estabelecimento {
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 18px;
+    margin-bottom: 16px;
+    color: var(--ink-950);
+    border-bottom: 1px solid #e2e3e1;
+    padding-bottom: 12px;
+}
+
+.lista-itens {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    font-size: 14.5px;
+}
+
+.item-linha {
+    display: flex;
+    justify-content: space-between;
+    color: var(--panel-ink-soft);
+}
+
+.divisor {
+    border: none;
+    border-top: 1px dashed var(--steel-300);
+    margin: 16px 0;
+}
+
+.total-nota-linha {
+    display: flex;
+    justify-content: space-between;
+    font-family: var(--font-display);
+    font-weight: 700;
+    font-size: 16px;
+    color: var(--ink-950);
+}

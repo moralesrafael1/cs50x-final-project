@@ -1,0 +1,45 @@
+{% extends "layout.html" %}
+
+{% block title %}Upload{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='upload') }}">
+{% endblock %}
+
+{% block content %}
+<!-- Título da Página (Substituindo o antigo h1 e p1) -->
+<section class="hero" style="padding-top: 40px; padding-bottom: 32px;">
+    <div class="hero-inner">
+        <h1 class="hero-title" style="font-size: clamp(32px, 6vw, 56px); margin-bottom: 16px;">
+            CONTROLE FISCAL
+        </h1>
+        <p class="hero-subtitle">
+            Faça o upload de suas compras e deixe nossa IA organizar os seus gastos automaticamente.
+        </p>
+    </div>
+</section>
+
+<!-- Seção Principal de Upload e Dashboard -->
+<div class="upload-section">
+    
+    <!-- Caixa de Resumo -->
+    <div class="caixa">
+        <p class="p3">Total Gasto no Mês</p>
+        <p class="p4">R$ 0,00</p>
+        <p class="p5">0 Comprovantes lidos</p>
+    </div>
+    
+    <!-- Área de Upload -->
+    <div class="upload">
+        <label for="foto-comprovante" class="botao-tracejado">
+            <span class="upload-icon">🧾</span>
+            Toque para fazer upload da nota fiscal
+        </label>
+        <input class="foto" type="file" id="foto-comprovante" accept="image/*" capture="camera" onchange="lerfoto()">
+    </div>
+
+    <!-- Container onde o JavaScript injetará os itens lidos -->
+    <div id="resultado-container"></div>
+
+</div>
+{% endblock %}

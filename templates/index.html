@@ -1,0 +1,108 @@
+{% extends "layout.html" %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='index') }}">
+{% endblock %}
+
+{% block content %}
+<!-- ===================== HERO PITCH ===================== -->
+<section class="hero">
+    <div class="hero-inner" style="max-width: 800px;">
+        <h1 class="hero-title" style="font-size: clamp(40px, 6vw, 72px);">
+            SUAS FINANÇAS,<br>SEM DIGITAÇÃO MANUAL
+        </h1>
+        <p class="hero-subtitle" style="font-size: 18px; max-width: 600px;">
+            Você não odeia ter que anotar cada café ou ida à farmácia? Nós também. 
+            Tire uma foto do seu cupom fiscal e deixe nossa Inteligência Artificial ler, extrair e organizar seus gastos item por item.
+        </p>
+        
+        <div style="margin-top: 32px;">
+            <a href="{{ url_for('register') }}" class="btn btn--primary" style="font-size: 16px; padding: 14px 32px;">Criar Conta Gratuita</a>
+        </div>
+    </div>
+</section>
+
+<section class="about-section">
+    <h2 class="section-title">O que fazemos por <span>você</span></h2>
+    
+    <div class="features-grid">
+        <!-- Card 1 -->
+        <div class="feature-card">
+            <span class="feature-icon">📸</span>
+            <h3 class="feature-title">Fim da Fricção Diária</h3>
+            <p class="feature-text">
+                A digitação manual é o principal motivo pelo qual as pessoas abandonam o controle financeiro. Resolva isso com um clique: envie a foto do comprovante e nosso sistema de OCR converte imagem em dados estruturados instantaneamente.
+            </p>
+        </div>
+
+        <!-- Card 2 -->
+        <div class="feature-card">
+            <span class="feature-icon">🔍</span>
+            <h3 class="feature-title">Granularidade Real</h3>
+            <p class="feature-text">
+                Chega de registrar "R$ 350,00 no Supermercado". Nossa IA enxerga o cupom e detalha exatamente o que pesou no orçamento, item a item. Nunca mais perca a rastreabilidade dos seus gastos por causa de papel térmico apagado.
+            </p>
+        </div>
+
+        <!-- Card 3 -->
+        <div class="feature-card">
+            <span class="feature-icon">📈</span>
+            <h3 class="feature-title">Sua Inflação Pessoal</h3>
+            <p class="feature-text">
+                Índices de mercado são médias genéricas. Nosso algoritmo calcula a <strong>Basket Inflation</strong>: comparamos o preço que você pagou nos mesmos itens (como leite, café ou azeite) ao longo dos meses para mostrar o impacto real no <em>seu</em> custo de vida.
+            </p>
+        </div>
+    </div>
+
+    <!-- ===================== HOW IT WORKS ===================== -->
+    <div class="how-it-works">
+        <h2 class="section-title" style="margin-bottom: 16px;">Como funciona a mágica?</h2>
+        <p style="color: var(--steel-400); max-width: 500px; margin: 0 auto;">Por trás dos panos, usamos Visão Computacional e Inteligência Artificial para poupar horas do seu mês.</p>
+        
+        <div class="steps-container">
+            <div class="step-item">
+                <div class="step-number">1</div>
+                <h4 style="color: var(--steel-100); margin-bottom: 8px;">Capture</h4>
+                <p style="color: var(--steel-400); font-size: 14px;">Tire uma foto ou faça upload do PDF da sua nota fiscal direto no celular ou computador.</p>
+            </div>
+            
+            <div class="step-item">
+                <div class="step-number">2</div>
+                <h4 style="color: var(--steel-100); margin-bottom: 8px;">Extração IA</h4>
+                <p style="color: var(--steel-400); font-size: 14px;">Nossa IA identifica o padrão do cupom, extraindo datas, local, itens, quantidades e valores de forma inteligente.</p>
+            </div>
+            
+            <div class="step-item">
+                <div class="step-number">3</div>
+                <h4 style="color: var(--steel-100); margin-bottom: 8px;">Análise Pronta</h4>
+                <p style="color: var(--steel-400); font-size: 14px;">Os dados são validados e salvos na sua conta. Acesse um dashboard completo com seu perfil de consumo personalizado.</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ===================== CALL TO ACTION ===================== -->
+    <div class="cta-container">
+        <h2 style="font-family: var(--font-display); font-size: 28px; color: var(--steel-100); margin-bottom: 16px;">Pronto para assumir o controle?</h2>
+        <p style="color: var(--steel-400); margin-bottom: 32px;">Pare de perder tempo com planilhas. Comece a entender para onde seu dinheiro vai.</p>
+        <a href="{{ url_for('register') }}" class="btn btn--primary" style="font-size: 16px; padding: 14px 40px;">Criar minha conta agora</a>
+    </div>
+</section>
+
+<!-- ===================== TRUST STRIP ===================== -->
+<section class="trust-strip">
+    <div class="trust-inner">
+        <div class="trust-item">
+            <span class="trust-number">100%</span>
+            <span class="trust-label">Automatizado</span>
+        </div>
+        <div class="trust-item">
+            <span class="trust-number">Zero</span>
+            <span class="trust-label">Digitação manual</span>
+        </div>
+        <div class="trust-item">
+            <span class="trust-number">Seguro</span>
+            <span class="trust-label">Dados criptografados</span>
+        </div>
+    </div>
+</section>
+{% endblock %}

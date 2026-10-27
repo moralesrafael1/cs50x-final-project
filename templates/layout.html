@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    
+    <!-- Título dinâmico por página com fallback padrão -->
+    <title>{% block title %}Meridian{% endblock %}</title>
+    
+    <!-- Fontes do Google -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    
+    <!-- Arquivo de estilos da pasta static/ -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    
+    <!-- Bloco opcional para CSS adicional de páginas filhas -->
+    {% block head %}{% endblock %}
+</head>
+
+<body>
+
+    <!-- ===================== HEADER ===================== -->
+    <header class="site-header">
+        <div class="header-inner">
+            <a href="{{ url_for('index') }}" class="logo">
+                <span class="logo-mark" aria-hidden="true"></span>
+                MERIDIAN
+            </a>
+
+            <!-- Barra de navegação do header (Pill Nav) -->
+            <nav class="main-nav">
+                <a href="{{ url_for('index') }}" 
+                   class="nav-link {% if request.endpoint == 'meridian' %}nav-link--active{% endif %}">
+                   Sobre
+                </a>
+                <a href="{{ url_for('login') }}" 
+                   class="nav-link {% if request.endpoint == 'login' %}nav-link--active{% endif %}">
+                   Login
+                </a>
+                <a href="{{ url_for('register') }}" 
+                   class="nav-link {% if request.endpoint == 'register' %}nav-link--active{% endif %}">
+                   Criar conta
+                </a>
+            </nav>
+
+            <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false">
+                <span></span><span></span><span></span>
+            </button>
+        </div>
+    </header>
+
+    <!-- ===================== CONTEÚDO PRINCIPAL ===================== -->
+    <main>
+        <!-- O conteúdo das telas filhas (index.html, login.html) será injetado aqui -->
+        {% block content %}
+        {% endblock %}
+    </main>
+
+    <!-- ===================== FOOTER ===================== -->
+    <footer class="site-footer">
+        <div class="footer-inner">
+            <span>© 2026 Meridian. Todos os direitos reservados.</span>
+        </div>
+    </footer>
+
+    <!-- Script JS Global -->
+   <!-- <script src="{{ url_for('static', filename='script.js') }}" defer></script>-->
+    
+    <!-- Bloco opcional para scripts de páginas filhas -->
+    {% block scripts %}{% endblock %}
+</body>
+
+</html>

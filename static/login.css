@@ -1,0 +1,116 @@
+.auth-card {
+    max-width: 420px !important;
+    margin: 0 auto;
+    padding: 32px 24px;
+    text-align: center; /* Força o alinhamento central */
+}
+
+.auth-field {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.auth-field label {
+    display: block;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--panel-ink-soft);
+    margin-bottom: 8px;
+    text-align: center; /* Labels centralizadas */
+}
+
+.auth-input-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1.5px solid #dcdddb;
+    border-radius: var(--radius-md);
+    background: #fff;
+    transition: border-color 0.15s ease;
+    width: 100%;
+}
+
+.auth-input-wrapper:focus-within {
+    border-color: #8b909a;
+}
+
+.auth-input-wrapper input {
+    flex: 1;
+    border: none;
+    outline: none;
+    background: none;
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--panel-ink);
+    padding: 14px 16px;
+    min-width: 0;
+    border-radius: var(--radius-md);
+    text-align: center; /* Texto digitado ficará no centro */
+}
+
+.auth-input-wrapper input::placeholder {
+    color: var(--steel-300);
+    text-align: center;
+}
+
+/* Opções extras (Lembrar de mim, Esqueceu a senha) */
+.auth-options {
+    display: flex;
+    flex-direction: column; /* Empilha no centro em telas menores */
+    justify-content: center;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 24px;
+    font-size: 13px;
+}
+
+@media (min-width: 480px) {
+    .auth-options {
+        flex-direction: row; /* Volta a ficar lado a lado em telas maiores, mas centralizado */
+        gap: 32px;
+    }
+}
+
+.auth-checkbox-label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    color: var(--panel-ink-soft);
+    cursor: pointer;
+}
+
+.auth-checkbox-label input[type="checkbox"] {
+    accent-color: var(--ink-800);
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.auth-link {
+    color: var(--panel-ink-soft);
+    text-decoration: underline;
+    transition: color 0.15s ease;
+}
+
+.auth-link:hover {
+    color: var(--panel-ink);
+}
+
+/* Rodapé do cartão de autenticação */
+.auth-footer {
+    margin-top: 24px;
+    text-align: center;
+    font-size: 13.5px;
+    color: var(--panel-ink-soft);
+}
+
+.auth-footer a {
+    color: var(--panel-ink);
+    font-weight: 600;
+    text-decoration: underline;
+}
+
+.auth-footer a:hover {
+    color: var(--ink-600);
+}
