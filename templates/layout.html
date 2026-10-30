@@ -32,18 +32,33 @@
 
             <!-- Barra de navegação do header (Pill Nav) -->
             <nav class="main-nav">
-                <a href="{{ url_for('index') }}" 
-                   class="nav-link {% if request.endpoint == 'meridian' %}nav-link--active{% endif %}">
-                   Sobre
-                </a>
-                <a href="{{ url_for('login') }}" 
-                   class="nav-link {% if request.endpoint == 'login' %}nav-link--active{% endif %}">
-                   Login
-                </a>
-                <a href="{{ url_for('register') }}" 
-                   class="nav-link {% if request.endpoint == 'register' %}nav-link--active{% endif %}">
-                   Criar conta
-                </a>
+                {% if session.get("user_id") %}
+                    <a href="{{ url_for('home') }}" 
+                    class="nav-link {% if request.endpoint == 'home' %}nav-link--active{% endif %}">
+                    Home
+                    </a>
+                    <a href="{{ url_for('upload') }}" 
+                    class="nav-link {% if request.endpoint == 'add' %}nav-link--active{% endif %}">
+                    Adicionar Nota
+                    </a>
+                    <a href="{{ url_for('account') }}" 
+                    class="nav-link {% if request.endpoint == 'account' %}nav-link--active{% endif %}">
+                    Conta
+                    </a>
+                {% else %}
+                    <a href="{{ url_for('index') }}" 
+                    class="nav-link {% if request.endpoint == 'meridian' %}nav-link--active{% endif %}">
+                    Sobre
+                    </a>
+                    <a href="{{ url_for('login') }}" 
+                    class="nav-link {% if request.endpoint == 'login' %}nav-link--active{% endif %}">
+                    Login
+                    </a>
+                    <a href="{{ url_for('register') }}" 
+                    class="nav-link {% if request.endpoint == 'register' %}nav-link--active{% endif %}">
+                    Criar conta
+                    </a>
+                {% endif %}
             </nav>
 
             <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false">
