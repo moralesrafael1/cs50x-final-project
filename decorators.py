@@ -1,4 +1,4 @@
-from flask import redirect, session
+from flask import redirect, session, render_template
 from functools import wraps
 
 def login_required(f):
@@ -9,3 +9,6 @@ def login_required(f):
         return f(*args, **kwargs)
 
     return decorated_function
+
+def error(message, code):
+    return render_template("error.html", message=message, code=code), code
