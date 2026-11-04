@@ -3,51 +3,62 @@
 {% block title %}Login — Meridian{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='login') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='auth.css') }}">
 {% endblock %}
 
 {% block content %}
-<section class="hero">
-    <div class="hero-inner">
-        <h1 class="hero-title">ACESSE SUA<br>CONTA</h1>
-        <p class="hero-subtitle">
+<section class="auth">
+
+    <!-- Coluna de mensagem -->
+    <div class="auth__intro">
+        <h1 class="auth__title">ACESSE SUA<br>CONTA</h1>
+        <p class="auth__subtitle">
             Entre para visualizar Dashboard completo do seu padrão de gastos.
         </p>
-
-        <div class="converter-card" style="max-width: 420px;">
-            <form action="{{ url_for('login') }}" method="POST">
-                
-                <div class="converter-field" style="margin-bottom: 20px;">
-                    <label for="email">E-mail</label>
-                    <div class="field-row">
-                        <input type="email" id="email" name="email" placeholder="seu@email.com" required style="font-size: 15px; font-family: var(--font-body);">
-                    </div>
-                </div>
-
-                <div class="converter-field" style="margin-bottom: 18px;">
-                    <label for="password">Senha</label>
-                    <div class="field-row">
-                        <input type="password" id="password" name="password" placeholder="••••••••" required style="font-size: 15px; font-family: var(--font-body);">
-                    </div>
-                </div>
-
-                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; font-size: 13px;">
-                    <label style="display: flex; align-items: center; gap: 8px; color: var(--panel-ink-soft); cursor: pointer;">
-                        <input type="checkbox" name="remember" style="accent-color: var(--ink-800);"> Lembrar de mim
-                    </label>
-                    <a href="#" style="color: var(--panel-ink-soft); text-decoration: underline;">Esqueceu a senha?</a>
-                </div>
-
-                <div class="converter-actions">
-                    <button type="submit" class="btn btn--convert" style="width: 100%;">Entrar</button>
-                </div>
-
-            </form>
-
-            <div style="margin-top: 24px; text-align: center; font-size: 13.5px; color: var(--panel-ink-soft);">
-                Não tem uma conta? <a href="{{ url_for('register') }}" style="color: var(--panel-ink); font-weight: 600; text-decoration: underline;">Cadastre-se</a>
-            </div>
-        </div>
+        <ul class="auth__perks">
+            <li>100% Automatizado</li>
+            <li>Zero digitação manual</li>
+            <li>Dados criptografados</li>
+        </ul>
     </div>
+
+    <!-- Cartão do formulário -->
+    <div class="auth-card">
+        <form action="{{ url_for('login') }}" method="POST">
+
+            <div class="auth-field">
+                <label for="email">E-mail</label>
+                <div class="auth-input">
+                    <input type="email" id="email" name="email" placeholder="seu@email.com" autocomplete="email" required autofocus>
+                </div>
+            </div>
+
+            <div class="auth-field">
+                <label for="password">Senha</label>
+                <div class="auth-input">
+                    <input type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password" required>
+                    <button type="button" class="auth-toggle" data-target="password" aria-pressed="false">Mostrar</button>
+                </div>
+            </div>
+
+            <div class="auth-options">
+                <label class="auth-check">
+                    <input type="checkbox" name="remember"> Lembrar de mim
+                </label>
+                <a href="#" class="auth-link">Esqueceu a senha?</a>
+            </div>
+
+            <button type="submit" class="auth-btn">Entrar</button>
+        </form>
+
+        <p class="auth-footer">
+            Não tem uma conta? <a href="{{ url_for('register') }}">Cadastre-se</a>
+        </p>
+    </div>
+
 </section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='auth.js') }}" defer></script>
 {% endblock %}

@@ -4,18 +4,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
+
     <!-- Título dinâmico por página com fallback padrão -->
     <title>{% block title %}Meridian{% endblock %}</title>
-    
+
     <!-- Fontes do Google -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
-    
+    <link
+        href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600&display=swap"
+        rel="stylesheet">
+
     <!-- Arquivo de estilos da pasta static/ -->
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
-    
+
     <!-- Bloco opcional para CSS adicional de páginas filhas -->
     {% block head %}{% endblock %}
 </head>
@@ -31,35 +33,42 @@
             </a>
 
             <!-- Barra de navegação do header (Pill Nav) -->
-            <nav class="main-nav">
+            <!-- Navegação + Logout -->
+            <div class="header-actions">
+                <nav class="main-nav">
+                    {% if session.get("user_id") %}
+                    <a href="{{ url_for('home') }}"
+                        class="nav-link {% if request.endpoint == 'home' %}nav-link--active{% endif %}">
+                        Home
+                    </a>
+                    <a href="{{ url_for('upload') }}"
+                        class="nav-link {% if request.endpoint == 'upload' %}nav-link--active{% endif %}">
+                        Adicionar Nota
+                    </a>
+                    <a href="{{ url_for('account') }}"
+                        class="nav-link {% if request.endpoint == 'account' %}nav-link--active{% endif %}">
+                        Conta
+                    </a>
+                    {% else %}
+                    <a href="{{ url_for('index') }}"
+                        class="nav-link {% if request.endpoint == 'index' %}nav-link--active{% endif %}">
+                        Sobre
+                    </a>
+                    <a href="{{ url_for('login') }}"
+                        class="nav-link {% if request.endpoint == 'login' %}nav-link--active{% endif %}">
+                        Login
+                    </a>
+                    <a href="{{ url_for('register') }}"
+                        class="nav-link {% if request.endpoint == 'register' %}nav-link--active{% endif %}">
+                        Criar conta
+                    </a>
+                    {% endif %}
+                </nav>
+
                 {% if session.get("user_id") %}
-                    <a href="{{ url_for('home') }}" 
-                    class="nav-link {% if request.endpoint == 'home' %}nav-link--active{% endif %}">
-                    Home
-                    </a>
-                    <a href="{{ url_for('upload') }}" 
-                    class="nav-link {% if request.endpoint == 'add' %}nav-link--active{% endif %}">
-                    Adicionar Nota
-                    </a>
-                    <a href="{{ url_for('account') }}" 
-                    class="nav-link {% if request.endpoint == 'account' %}nav-link--active{% endif %}">
-                    Conta
-                    </a>
-                {% else %}
-                    <a href="{{ url_for('index') }}" 
-                    class="nav-link {% if request.endpoint == 'meridian' %}nav-link--active{% endif %}">
-                    Sobre
-                    </a>
-                    <a href="{{ url_for('login') }}" 
-                    class="nav-link {% if request.endpoint == 'login' %}nav-link--active{% endif %}">
-                    Login
-                    </a>
-                    <a href="{{ url_for('register') }}" 
-                    class="nav-link {% if request.endpoint == 'register' %}nav-link--active{% endif %}">
-                    Criar conta
-                    </a>
+                <a href="{{ url_for('logout') }}" class="logout-link">Sair</a>
                 {% endif %}
-            </nav>
+            </div>
 
             <button class="nav-toggle" aria-label="Abrir menu" aria-expanded="false">
                 <span></span><span></span><span></span>
@@ -82,8 +91,8 @@
     </footer>
 
     <!-- Script JS Global -->
-   <!-- <script src="{{ url_for('static', filename='script.js') }}" defer></script>-->
-    
+    <!-- <script src="{{ url_for('static', filename='script.js') }}" defer></script>-->
+
     <!-- Bloco opcional para scripts de páginas filhas -->
     {% block scripts %}{% endblock %}
 </body>

@@ -3,60 +3,75 @@
 {% block title %}Criar Conta — Controle Financeiro{% endblock %}
 
 {% block head %}
-<!-- Inserindo o CSS modular específico para as páginas de autenticação -->
-<link rel="stylesheet" href="{{ url_for('static', filename='css/login.css') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='auth.css') }}">
 {% endblock %}
 
 {% block content %}
-<section class="hero">
-    <div class="hero-inner">
-        <h1 class="hero-title">CRIE SUA<br>CONTA</h1>
-        <p class="hero-subtitle">
+<section class="auth">
+
+    <!-- Coluna de mensagem -->
+    <div class="auth__intro">
+        <h1 class="auth__title">CRIE SUA<br>CONTA</h1>
+        <p class="auth__subtitle">
             Junte-se a nós e automatize a gestão das suas finanças com Inteligência Artificial.
         </p>
-
-        <!-- Utilizamos a base do converter-card com a classe modificadora auth-card do login.css -->
-        <div class="converter-card auth-card">
-            <form action="{{ url_for('register') }}" method="POST">
-                
-                <div class="auth-field">
-                    <label for="username">Username</label>
-                    <div class="auth-input-wrapper">
-                        <input type="text" id="name" name="username" placeholder="Como deseja ser chamado?" required>
-                    </div>
-                </div>
-
-                <div class="auth-field">
-                    <label for="email">E-mail</label>
-                    <div class="auth-input-wrapper">
-                        <input type="email" id="email" name="email" placeholder="seu@email.com" required>
-                    </div>
-                </div>
-
-                <div class="auth-field">
-                    <label for="password">Senha</label>
-                    <div class="auth-input-wrapper">
-                        <input type="password" id="password" name="password" placeholder="Crie uma senha forte" required>
-                    </div>
-                </div>
-
-                <div class="auth-field" style="margin-bottom: 24px;">
-                    <label for="confirm_password">Confirmar Senha</label>
-                    <div class="auth-input-wrapper">
-                        <input type="password" id="confirm_password" name="confirm_password" placeholder="Repita a senha" required>
-                    </div>
-                </div>
-
-                <div class="converter-actions">
-                    <button type="submit" class="btn btn--convert" style="width: 100%;">Cadastrar</button>
-                </div>
-
-            </form>
-
-            <div class="auth-footer">
-                Já tem uma conta? <a href="{{ url_for('login') }}">Faça login</a>
-            </div>
-        </div>
+        <ul class="auth__perks">
+            <li>100% Automatizado</li>
+            <li>Zero digitação manual</li>
+            <li>Dados criptografados</li>
+        </ul>
     </div>
+
+    <!-- Cartão do formulário -->
+    <div class="auth-card">
+        <form action="{{ url_for('register') }}" method="POST">
+
+            <div class="auth-field">
+                <label for="username">Username</label>
+                <div class="auth-input">
+                    <input type="text" id="username" name="username" placeholder="Como deseja ser chamado?" autocomplete="username" required autofocus>
+                </div>
+            </div>
+
+            <div class="auth-field">
+                <label for="email">E-mail</label>
+                <div class="auth-input">
+                    <input type="email" id="email" name="email" placeholder="seu@email.com" autocomplete="email" required>
+                </div>
+            </div>
+
+            <div class="auth-field">
+                <label for="password">Senha</label>
+                <div class="auth-input">
+                    <input type="password" id="password" name="password" placeholder="Crie uma senha forte" autocomplete="new-password" required>
+                    <button type="button" class="auth-toggle" data-target="password" aria-pressed="false">Mostrar</button>
+                </div>
+                <div class="auth-meter" data-meter data-level="0" aria-live="polite">
+                    <span class="auth-meter__bars"><i></i><i></i><i></i><i></i></span>
+                    <span class="auth-meter__label"></span>
+                </div>
+            </div>
+
+            <div class="auth-field">
+                <label for="confirm_password">Confirmar Senha</label>
+                <div class="auth-input">
+                    <input type="password" id="confirm_password" name="confirm_password" placeholder="Repita a senha" autocomplete="new-password" required>
+                    <button type="button" class="auth-toggle" data-target="confirm_password" aria-pressed="false">Mostrar</button>
+                </div>
+                <p class="auth-hint" id="match-hint" aria-live="polite"></p>
+            </div>
+
+            <button type="submit" class="auth-btn">Cadastrar</button>
+        </form>
+
+        <p class="auth-footer">
+            Já tem uma conta? <a href="{{ url_for('login') }}">Faça login</a>
+        </p>
+    </div>
+
 </section>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='auth.js') }}" defer></script>
 {% endblock %}

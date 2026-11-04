@@ -1,0 +1,249 @@
+/* =============================================================
+   MERIDIAN — Login e Cadastro (login.html / register.html)
+   Substitui login.css. Usa os tokens de style.css.
+   ============================================================= */
+
+:root {
+    --ok: #6fbf8b;
+    --bad: #e07a6b;
+}
+
+.auth {
+    width: 100%;
+    max-width: 1000px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 440px);
+    align-items: center;
+    gap: 64px;
+    padding: 56px 12px 40px;
+    position: relative;
+    z-index: 1;
+}
+
+/* ---------- Coluna de mensagem ---------- */
+.auth__title {
+    font-family: var(--font-display);
+    font-size: clamp(36px, 5vw, 60px);
+    font-weight: 700;
+    line-height: 1.04;
+    letter-spacing: -0.02em;
+    margin: 0 0 20px;
+    background: var(--silver-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.auth__subtitle {
+    font-size: 17px;
+    line-height: 1.65;
+    color: var(--steel-300);
+    max-width: 42ch;
+    margin: 0 0 32px;
+}
+
+.auth__perks {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.auth__perks li {
+    padding: 8px 16px;
+    border: 1px solid var(--ink-700);
+    border-radius: 999px;
+    background: var(--ink-900);
+    font-size: 13.5px;
+    color: var(--steel-300);
+}
+
+/* ---------- Cartão do formulário ---------- */
+.auth-card {
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius-lg);
+    padding: 36px 32px 28px;
+    color: var(--panel-ink);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 30px 50px -20px rgba(0, 0, 0, 0.6);
+}
+
+.auth-field { margin-bottom: 20px; }
+
+.auth-field label {
+    display: block;
+    margin-bottom: 8px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--panel-ink-soft);
+}
+
+.auth-input {
+    display: flex;
+    align-items: center;
+    background: #fff;
+    border: 1.5px solid #dcdddb;
+    border-radius: var(--radius-md);
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.auth-input:focus-within {
+    border-color: var(--steel-500);
+    box-shadow: 0 0 0 4px rgba(139, 144, 154, 0.2);
+}
+
+.auth-input input {
+    flex: 1;
+    min-width: 0;
+    padding: 14px 16px;
+    border: none;
+    outline: none;
+    background: none;
+    font-family: var(--font-body);
+    font-size: 15px;
+    color: var(--panel-ink);
+}
+
+.auth-input input::placeholder { color: var(--steel-400); }
+
+/* Botão mostrar/ocultar senha */
+.auth-toggle {
+    margin-right: 8px;
+    padding: 6px 12px;
+    border: none;
+    border-radius: 999px;
+    background: transparent;
+    font-size: 12.5px;
+    font-weight: 600;
+    color: var(--panel-ink-soft);
+    transition: background 0.15s ease, color 0.15s ease;
+}
+.auth-toggle:hover { background: #ececea; color: var(--panel-ink); }
+.auth-toggle:focus-visible { outline: 2px solid var(--steel-500); }
+
+/* Lembrar de mim / Esqueceu a senha */
+.auth-options {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 24px;
+    font-size: 13px;
+}
+
+.auth-check {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--panel-ink-soft);
+    cursor: pointer;
+}
+.auth-check input {
+    width: 16px;
+    height: 16px;
+    accent-color: var(--ink-800);
+    cursor: pointer;
+}
+
+.auth-link {
+    color: var(--panel-ink-soft);
+    text-decoration: underline;
+    transition: color 0.15s ease;
+}
+.auth-link:hover { color: var(--panel-ink); }
+
+/* Botão principal */
+.auth-btn {
+    width: 100%;
+    padding: 15px 24px;
+    border: none;
+    border-radius: 999px;
+    background: var(--ink-900);
+    color: var(--steel-100);
+    font-family: var(--font-body);
+    font-size: 16px;
+    font-weight: 600;
+    transition: background 0.15s ease, transform 0.15s ease;
+}
+.auth-btn:hover { background: var(--ink-600); transform: translateY(-2px); }
+.auth-btn:focus-visible { outline: 3px solid var(--steel-400); outline-offset: 3px; }
+
+/* Rodapé do cartão */
+.auth-footer {
+    margin: 22px 0 0;
+    text-align: center;
+    font-size: 13.5px;
+    color: var(--panel-ink-soft);
+}
+.auth-footer a {
+    color: var(--panel-ink);
+    font-weight: 600;
+    text-decoration: underline;
+}
+.auth-footer a:hover { color: var(--ink-600); }
+
+/* ---------- Cadastro: força da senha e confirmação ---------- */
+.auth-meter {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: 10px;
+    min-height: 16px;
+}
+
+.auth-meter__bars {
+    flex: 1;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 4px;
+}
+.auth-meter__bars i {
+    height: 4px;
+    border-radius: 999px;
+    background: #dcdddb;
+    transition: background 0.2s ease;
+}
+
+.auth-meter__label {
+    min-width: 64px;
+    text-align: right;
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--panel-ink-soft);
+}
+
+.auth-meter[data-level="1"] i:nth-child(-n+1) { background: var(--bad); }
+.auth-meter[data-level="2"] i:nth-child(-n+2) { background: #f0a35e; }
+.auth-meter[data-level="3"] i:nth-child(-n+3) { background: #8fb996; }
+.auth-meter[data-level="4"] i:nth-child(-n+4) { background: var(--ok); }
+
+.auth-hint {
+    min-height: 18px;
+    margin: 8px 0 0;
+    font-size: 12.5px;
+    font-weight: 500;
+}
+.auth-hint--ok { color: #3f8f5f; }
+.auth-hint--bad { color: #c0564a; }
+
+/* ---------- Responsividade ---------- */
+@media (max-width: 900px) {
+    .auth {
+        grid-template-columns: 1fr;
+        gap: 36px;
+        padding-top: 32px;
+    }
+    .auth__subtitle { margin-bottom: 24px; }
+}
+
+@media (max-width: 520px) {
+    .auth-card { padding: 28px 20px 24px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .auth-btn, .auth-input, .auth-meter__bars i { transition: none; }
+    .auth-btn:hover { transform: none; }
+}

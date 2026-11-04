@@ -1,108 +1,306 @@
 {% extends "layout.html" %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='index') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='index.css') }}">
 {% endblock %}
 
 {% block content %}
-<!-- ===================== HERO PITCH ===================== -->
-<section class="hero">
-    <div class="hero-inner" style="max-width: 800px;">
-        <h1 class="hero-title" style="font-size: clamp(40px, 6vw, 72px);">
+
+<!-- ===================== HERO ===================== -->
+<section class="lp-hero">
+    <div class="lp-hero__text">
+        <h1 class="lp-hero__title">
             SUAS FINANÇAS,<br>SEM DIGITAÇÃO MANUAL
         </h1>
-        <p class="hero-subtitle" style="font-size: 18px; max-width: 600px;">
-            Você não odeia ter que anotar cada café ou ida à farmácia? Nós também. 
+        <p class="lp-hero__subtitle">
+            Você não odeia ter que anotar cada café ou ida à farmácia? Nós também.
             Tire uma foto do seu cupom fiscal e deixe nossa Inteligência Artificial ler, extrair e organizar seus gastos item por item.
         </p>
-        
-        <div style="margin-top: 32px;">
-            <a href="{{ url_for('register') }}" class="btn btn--primary" style="font-size: 16px; padding: 14px 32px;">Criar Conta Gratuita</a>
+
+        <div class="lp-hero__actions">
+            <a href="{{ url_for('register') }}" class="lp-btn lp-btn--primary">Criar Conta Gratuita</a>
+            <a href="{{ url_for('login') }}" class="lp-btn lp-btn--ghost">Já tenho conta</a>
+        </div>
+    </div>
+
+    <!-- Demonstração animada: cupom sendo lido pela IA -->
+    <div class="lp-demo" id="lp-demo" aria-hidden="true">
+        <div class="lp-receipt-wrap">
+            <div class="lp-receipt">
+                <div class="lp-scan" id="lp-scan"></div>
+                <div class="lp-receipt__head">
+                    <span class="lp-receipt__logo"></span>
+                    <div>
+                        <strong>Mercado Central</strong>
+                        <small>03/11/2026</small>
+                    </div>
+                </div>
+                <div class="lp-receipt__row" data-hit="1"><span>Leite integral 1L</span><b>5,49</b></div>
+                <div class="lp-receipt__row" data-hit="2"><span>Café torrado 500g</span><b>21,90</b></div>
+                <div class="lp-receipt__row" data-hit="3"><span>Azeite extra virgem</span><b>34,90</b></div>
+                <div class="lp-receipt__sum"><span>TOTAL</span><b>62,29</b></div>
+                <div class="lp-receipt__barcode"></div>
+            </div>
+        </div>
+
+        <div class="lp-extract">
+            <div class="lp-extract__head">
+                <span>Dados extraídos</span>
+                <span class="lp-badge">IA</span>
+            </div>
+            <ul class="lp-extract__list">
+                <li data-step="2">
+                    <span class="lp-dot lp-dot--a"></span>
+                    <div><b>Leite integral 1L</b><small>Laticínios</small></div>
+                    <span>R$ 5,49</span>
+                </li>
+                <li data-step="3">
+                    <span class="lp-dot lp-dot--b"></span>
+                    <div><b>Café torrado 500g</b><small>Mercearia</small></div>
+                    <span>R$ 21,90</span>
+                </li>
+                <li data-step="4">
+                    <span class="lp-dot lp-dot--c"></span>
+                    <div><b>Azeite extra virgem</b><small>Mercearia</small></div>
+                    <span>R$ 34,90</span>
+                </li>
+            </ul>
+            <div class="lp-extract__total">
+                <span>Total da nota</span>
+                <strong id="lp-total">R$ 62,29</strong>
+            </div>
+            <div class="lp-extract__bar"><i id="lp-fill"></i></div>
         </div>
     </div>
 </section>
 
-<section class="about-section">
-    <h2 class="section-title">O que fazemos por <span>você</span></h2>
-    
-    <div class="features-grid">
+<!-- ===================== DESTAQUES RÁPIDOS ===================== -->
+<section class="lp-stats lp-reveal" aria-label="Destaques">
+    <div class="lp-stat">
+        <span class="lp-stat__value">100%</span>
+        <span class="lp-stat__label">Automatizado</span>
+    </div>
+    <div class="lp-stat">
+        <span class="lp-stat__value">Zero</span>
+        <span class="lp-stat__label">Digitação manual</span>
+    </div>
+    <div class="lp-stat">
+        <span class="lp-stat__value">Seguro</span>
+        <span class="lp-stat__label">Dados criptografados</span>
+    </div>
+</section>
+
+<!-- ===================== RECURSOS ===================== -->
+<section class="lp-section">
+    <h2 class="lp-section__title lp-reveal">O que fazemos por <span>você</span></h2>
+
+    <div class="lp-features">
         <!-- Card 1 -->
-        <div class="feature-card">
-            <span class="feature-icon">📸</span>
-            <h3 class="feature-title">Fim da Fricção Diária</h3>
-            <p class="feature-text">
+        <article class="lp-card lp-reveal">
+            <span class="lp-card__icon" aria-hidden="true">📸</span>
+            <h3 class="lp-card__title">Fim da Fricção Diária</h3>
+            <p class="lp-card__text">
                 A digitação manual é o principal motivo pelo qual as pessoas abandonam o controle financeiro. Resolva isso com um clique: envie a foto do comprovante e nosso sistema de OCR converte imagem em dados estruturados instantaneamente.
             </p>
-        </div>
+        </article>
 
         <!-- Card 2 -->
-        <div class="feature-card">
-            <span class="feature-icon">🔍</span>
-            <h3 class="feature-title">Granularidade Real</h3>
-            <p class="feature-text">
+        <article class="lp-card lp-reveal" style="--d: 120ms">
+            <span class="lp-card__icon" aria-hidden="true">🔍</span>
+            <h3 class="lp-card__title">Granularidade Real</h3>
+            <p class="lp-card__text">
                 Chega de registrar "R$ 350,00 no Supermercado". Nossa IA enxerga o cupom e detalha exatamente o que pesou no orçamento, item a item. Nunca mais perca a rastreabilidade dos seus gastos por causa de papel térmico apagado.
             </p>
-        </div>
+        </article>
 
-        <!-- Card 3 -->
-        <div class="feature-card">
-            <span class="feature-icon">📈</span>
-            <h3 class="feature-title">Sua Inflação Pessoal</h3>
-            <p class="feature-text">
-                Índices de mercado são médias genéricas. Nosso algoritmo calcula a <strong>Basket Inflation</strong>: comparamos o preço que você pagou nos mesmos itens (como leite, café ou azeite) ao longo dos meses para mostrar o impacto real no <em>seu</em> custo de vida.
-            </p>
-        </div>
-    </div>
+        <!-- Card 3 (destaque, com gráfico interativo) -->
+        <article class="lp-card lp-card--featured lp-reveal">
+            <div class="lp-card__body">
+                <span class="lp-card__icon" aria-hidden="true">📈</span>
+                <h3 class="lp-card__title">Sua Inflação Pessoal</h3>
+                <p class="lp-card__text">
+                    Índices de mercado são médias genéricas. Nosso algoritmo calcula a <strong>Basket Inflation</strong>: comparamos o preço que você pagou nos mesmos itens (como leite, café ou azeite) ao longo dos meses para mostrar o impacto real no <em>seu</em> custo de vida.
+                </p>
+            </div>
 
-    <!-- ===================== HOW IT WORKS ===================== -->
-    <div class="how-it-works">
-        <h2 class="section-title" style="margin-bottom: 16px;">Como funciona a mágica?</h2>
-        <p style="color: var(--steel-400); max-width: 500px; margin: 0 auto;">Por trás dos panos, usamos Visão Computacional e Inteligência Artificial para poupar horas do seu mês.</p>
-        
-        <div class="steps-container">
-            <div class="step-item">
-                <div class="step-number">1</div>
-                <h4 style="color: var(--steel-100); margin-bottom: 8px;">Capture</h4>
-                <p style="color: var(--steel-400); font-size: 14px;">Tire uma foto ou faça upload do PDF da sua nota fiscal direto no celular ou computador.</p>
+            <div class="lp-chart" id="lp-chart">
+                <div class="lp-chart__tabs" role="group" aria-label="Escolha um item">
+                    <button type="button" class="lp-tab is-active" data-item="leite" aria-pressed="true">Leite</button>
+                    <button type="button" class="lp-tab" data-item="cafe" aria-pressed="false">Café</button>
+                    <button type="button" class="lp-tab" data-item="azeite" aria-pressed="false">Azeite</button>
+                </div>
+                <div class="lp-chart__delta">
+                    <strong id="lp-delta">+12,0%</strong>
+                    <span id="lp-delta-label">em 6 meses</span>
+                </div>
+                <div class="lp-chart__plot" id="lp-plot"></div>
+                <p class="lp-chart__note">Simulação com preços de exemplo</p>
             </div>
-            
-            <div class="step-item">
-                <div class="step-number">2</div>
-                <h4 style="color: var(--steel-100); margin-bottom: 8px;">Extração IA</h4>
-                <p style="color: var(--steel-400); font-size: 14px;">Nossa IA identifica o padrão do cupom, extraindo datas, local, itens, quantidades e valores de forma inteligente.</p>
-            </div>
-            
-            <div class="step-item">
-                <div class="step-number">3</div>
-                <h4 style="color: var(--steel-100); margin-bottom: 8px;">Análise Pronta</h4>
-                <p style="color: var(--steel-400); font-size: 14px;">Os dados são validados e salvos na sua conta. Acesse um dashboard completo com seu perfil de consumo personalizado.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- ===================== CALL TO ACTION ===================== -->
-    <div class="cta-container">
-        <h2 style="font-family: var(--font-display); font-size: 28px; color: var(--steel-100); margin-bottom: 16px;">Pronto para assumir o controle?</h2>
-        <p style="color: var(--steel-400); margin-bottom: 32px;">Pare de perder tempo com planilhas. Comece a entender para onde seu dinheiro vai.</p>
-        <a href="{{ url_for('register') }}" class="btn btn--primary" style="font-size: 16px; padding: 14px 40px;">Criar minha conta agora</a>
+        </article>
     </div>
 </section>
 
-<!-- ===================== TRUST STRIP ===================== -->
-<section class="trust-strip">
-    <div class="trust-inner">
-        <div class="trust-item">
-            <span class="trust-number">100%</span>
-            <span class="trust-label">Automatizado</span>
-        </div>
-        <div class="trust-item">
-            <span class="trust-number">Zero</span>
-            <span class="trust-label">Digitação manual</span>
-        </div>
-        <div class="trust-item">
-            <span class="trust-number">Seguro</span>
-            <span class="trust-label">Dados criptografados</span>
-        </div>
+<!-- ===================== COMO FUNCIONA ===================== -->
+<section class="lp-section">
+    <div class="lp-panel lp-reveal">
+        <h2 class="lp-section__title">Como funciona a mágica?</h2>
+        <p class="lp-panel__lead">Por trás dos panos, usamos Visão Computacional e Inteligência Artificial para poupar horas do seu mês.</p>
+
+        <ol class="lp-steps">
+            <li class="lp-step">
+                <span class="lp-step__number">1</span>
+                <h4 class="lp-step__title">Capture</h4>
+                <p class="lp-step__text">Tire uma foto ou faça upload do PDF da sua nota fiscal direto no celular ou computador.</p>
+            </li>
+            <li class="lp-step">
+                <span class="lp-step__number">2</span>
+                <h4 class="lp-step__title">Extração IA</h4>
+                <p class="lp-step__text">Nossa IA identifica o padrão do cupom, extraindo datas, local, itens, quantidades e valores de forma inteligente.</p>
+            </li>
+            <li class="lp-step">
+                <span class="lp-step__number">3</span>
+                <h4 class="lp-step__title">Análise Pronta</h4>
+                <p class="lp-step__text">Os dados são validados e salvos na sua conta. Acesse um dashboard completo com seu perfil de consumo personalizado.</p>
+            </li>
+        </ol>
     </div>
 </section>
+
+<!-- ===================== CALL TO ACTION ===================== -->
+<section class="lp-cta lp-reveal">
+    <h2 class="lp-cta__title">Pronto para assumir o controle?</h2>
+    <p class="lp-cta__text">Pare de perder tempo com planilhas. Comece a entender para onde seu dinheiro vai.</p>
+    <a href="{{ url_for('register') }}" class="lp-btn lp-btn--silver">Criar minha conta agora</a>
+</section>
+
+{% endblock %}
+
+{% block scripts %}
+{% raw %}
+<script>
+(function () {
+    var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var brl = function (v) { return 'R$ ' + v.toFixed(2).replace('.', ','); };
+
+    /* ---------- Entrada suave das seções ---------- */
+    var reveals = document.querySelectorAll('.lp-reveal');
+    if (!reduce && 'IntersectionObserver' in window) {
+        document.documentElement.classList.add('lp-js');
+        var io = new IntersectionObserver(function (entries) {
+            entries.forEach(function (e) {
+                if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); }
+            });
+        }, { threshold: 0.15 });
+        reveals.forEach(function (el) { io.observe(el); });
+    }
+
+    /* ---------- Demo: cupom lido pela IA (em loop) ---------- */
+    var demo = document.getElementById('lp-demo');
+    if (demo && !reduce) {
+        var hits = demo.querySelectorAll('[data-hit]');
+        var items = demo.querySelectorAll('[data-step]');
+        var scan = document.getElementById('lp-scan');
+        var total = document.getElementById('lp-total');
+        var fill = document.getElementById('lp-fill');
+        var scanPos = [2, 30, 52, 74, 96];
+        var step = 0, timer = null, raf = null;
+
+        var countTo = function (target) {
+            var start = null;
+            cancelAnimationFrame(raf);
+            var tick = function (t) {
+                if (start === null) start = t;
+                var p = Math.min((t - start) / 900, 1);
+                total.textContent = brl(target * (1 - Math.pow(1 - p, 3)));
+                if (p < 1) raf = requestAnimationFrame(tick);
+            };
+            raf = requestAnimationFrame(tick);
+        };
+
+        var render = function (s) {
+            hits.forEach(function (el) { el.classList.toggle('on', s >= +el.getAttribute('data-hit')); });
+            items.forEach(function (el) { el.classList.toggle('on', s >= +el.getAttribute('data-step')); });
+            scan.style.opacity = (s >= 1 && s <= 4) ? 1 : 0;
+            scan.style.top = scanPos[Math.min(s, 4)] + '%';
+            if (s === 5) { countTo(62.29); fill.style.width = '100%'; }
+            if (s === 0) { cancelAnimationFrame(raf); total.textContent = brl(0); fill.style.width = '0'; }
+        };
+
+        var advance = function () {
+            step = (step + 1) % 9;
+            render(step);
+        };
+        var play = function () { if (!timer) timer = setInterval(advance, 950); };
+        var pause = function () { clearInterval(timer); timer = null; };
+
+        demo.classList.add('is-live');
+        render(0);
+        if ('IntersectionObserver' in window) {
+            new IntersectionObserver(function (en) {
+                en[0].isIntersecting ? play() : pause();
+            }, { threshold: 0.3 }).observe(demo);
+        } else { play(); }
+    }
+
+    /* ---------- Gráfico interativo: Basket Inflation ---------- */
+    var plot = document.getElementById('lp-plot');
+    if (plot) {
+        var months = ['Mai', 'Jun', 'Jul', 'Ago', 'Set', 'Out'];
+        var DATA = {
+            leite:  [4.90, 5.02, 5.17, 5.29, 5.40, 5.49],
+            cafe:   [18.90, 19.40, 20.10, 20.80, 21.40, 21.90],
+            azeite: [29.90, 30.80, 32.10, 33.20, 34.20, 34.90]
+        };
+        var W = 420, H = 190, L = 14, R = 14, T = 34, B = 28;
+
+        var draw = function (key) {
+            var v = DATA[key];
+            var min = Math.min.apply(null, v), max = Math.max.apply(null, v);
+            var pad = (max - min) * 0.15;
+            var lo = min - pad, hi = max + pad;
+            var x = function (i) { return L + i * (W - L - R) / (v.length - 1); };
+            var y = function (n) { return T + (1 - (n - lo) / (hi - lo)) * (H - T - B); };
+            var pts = v.map(function (n, i) { return x(i).toFixed(1) + ' ' + y(n).toFixed(1); });
+            var line = 'M' + pts.join(' L');
+            var area = line + ' L' + x(v.length - 1).toFixed(1) + ' ' + (H - B) + ' L' + x(0).toFixed(1) + ' ' + (H - B) + ' Z';
+            var dots = v.map(function (n, i) {
+                var last = i === v.length - 1;
+                return '<circle cx="' + x(i).toFixed(1) + '" cy="' + y(n).toFixed(1) + '" r="' + (last ? 5.5 : 3) +
+                       '" class="' + (last ? 'lp-pt lp-pt--last' : 'lp-pt') + '" style="animation-delay:' + (350 + i * 110) + 'ms"/>';
+            }).join('');
+            var labels = months.map(function (m, i) {
+                return '<text x="' + x(i).toFixed(1) + '" y="' + (H - 8) + '" text-anchor="middle" class="lp-ax">' + m + '</text>';
+            }).join('');
+            var first = '<text x="' + x(0) + '" y="' + (y(v[0]) - 12).toFixed(1) + '" class="lp-val">' + brl(v[0]) + '</text>';
+            var lastV = '<text x="' + x(v.length - 1) + '" y="' + (y(v[v.length - 1]) - 14).toFixed(1) + '" text-anchor="end" class="lp-val lp-val--last">' + brl(v[v.length - 1]) + '</text>';
+
+            plot.innerHTML =
+                '<svg viewBox="0 0 ' + W + ' ' + H + '" role="img" aria-label="Evolução do preço pago">' +
+                '<defs><linearGradient id="lpg" x1="0" y1="0" x2="0" y2="1">' +
+                '<stop offset="0" stop-color="#c7cbd1" stop-opacity=".28"/><stop offset="1" stop-color="#c7cbd1" stop-opacity="0"/>' +
+                '</linearGradient></defs>' +
+                '<path d="' + area + '" fill="url(#lpg)" class="lp-area"/>' +
+                '<path d="' + line + '" pathLength="1" class="lp-line"/>' +
+                dots + first + lastV + labels + '</svg>';
+
+            var pct = (v[v.length - 1] / v[0] - 1) * 100;
+            document.getElementById('lp-delta').textContent = '+' + pct.toFixed(1).replace('.', ',') + '%';
+        };
+
+        var tabs = document.querySelectorAll('.lp-tab');
+        tabs.forEach(function (tab) {
+            tab.addEventListener('click', function () {
+                tabs.forEach(function (t) {
+                    var on = t === tab;
+                    t.classList.toggle('is-active', on);
+                    t.setAttribute('aria-pressed', on ? 'true' : 'false');
+                });
+                draw(tab.getAttribute('data-item'));
+            });
+        });
+        draw('leite');
+    }
+})();
+</script>
+{% endraw %}
 {% endblock %}

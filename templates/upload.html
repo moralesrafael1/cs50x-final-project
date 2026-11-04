@@ -3,43 +3,77 @@
 {% block title %}Upload{% endblock %}
 
 {% block head %}
-<link rel="stylesheet" href="{{ url_for('static', filename='upload') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='upload.css') }}">
 {% endblock %}
 
 {% block content %}
-<!-- Título da Página (Substituindo o antigo h1 e p1) -->
-<section class="hero" style="padding-top: 40px; padding-bottom: 32px;">
-    <div class="hero-inner">
-        <h1 class="hero-title" style="font-size: clamp(32px, 6vw, 56px); margin-bottom: 16px;">
-            CONTROLE FISCAL
-        </h1>
-        <p class="hero-subtitle">
+<div class="up-page">
+
+    <!-- Título da página -->
+    <header class="up-head">
+        <h1 class="up-head__title">CONTROLE FISCAL</h1>
+        <p class="up-head__subtitle">
             Faça o upload de suas compras e deixe nossa IA organizar os seus gastos automaticamente.
         </p>
-    </div>
-</section>
+    </header>
 
-<!-- Seção Principal de Upload e Dashboard -->
-<div class="upload-section">
-    
-    <!-- Caixa de Resumo -->
-    <div class="caixa">
-        <p class="p3">Total Gasto no Mês</p>
-        <p class="p4">R$ 0,00</p>
-        <p class="p5">0 Comprovantes lidos</p>
-    </div>
-    
-    <!-- Área de Upload -->
-    <div class="upload">
-        <label for="foto-comprovante" class="botao-tracejado">
-            <span class="upload-icon">🧾</span>
-            Toque para fazer upload da nota fiscal
-        </label>
-        <input class="foto" type="file" id="foto-comprovante" accept="image/*" capture="camera" onchange="lerfoto()">
-    </div>
+    <div class="up-grid">
 
-    <!-- Container onde o JavaScript injetará os itens lidos -->
-    <div id="resultado-container"></div>
+        <!-- Coluna esquerda: resumo + upload -->
+        <div class="up-side">
 
+            <!-- Caixa de Resumo -->
+            <div class="caixa">
+                <p class="caixa__label">Total Gasto no Mês</p>
+                <p class="caixa__value" id="total-mes">R$ 0,00</p>
+                <p class="caixa__count"><span id="total-lidos">0</span> Comprovantes lidos</p>
+            </div>
+
+            <!-- Área de Upload -->
+            <div class="upload" id="dropzone">
+                <input class="foto" type="file" id="foto-comprovante" accept="image/*,application/pdf" capture="camera" onchange="lerfoto()">
+                <label for="foto-comprovante" class="botao-tracejado">
+                    <span class="upload-icon">🧾</span>
+                    <span class="botao-tracejado__text">Toque para fazer upload da nota fiscal</span>
+                    <span class="botao-tracejado__hint">ou arraste a imagem até aqui</span>
+                </label>
+
+                <!-- Pré-visualização (aparece após escolher o arquivo) -->
+                <div class="up-preview" id="up-preview" hidden>
+                    <div class="up-preview__thumb" id="up-thumb"></div>
+                    <div class="up-preview__meta">
+                        <strong id="up-name"></strong>
+                        <span id="up-size"></span>
+                    </div>
+                    <div class="up-preview__actions">
+                        <label for="foto-comprovante" class="up-link">Trocar</label>
+                        <button type="button" class="up-link" id="up-remove">Remover</button>
+                    </div>
+                    <div class="up-preview__busy" id="up-busy" hidden>
+                        <span class="up-spinner" aria-hidden="true"></span> Lendo comprovante…
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Coluna direita: resultados -->
+        <div class="up-main">
+            <!-- Estado vazio (some quando o primeiro comprovante é renderizado) -->
+            <div class="up-empty" id="resultado-vazio">
+                <div class="up-empty__ghost" aria-hidden="true">
+                    <span></span><span></span><span></span>
+                </div>
+                <p>Seus comprovantes lidos aparecerão aqui</p>
+            </div>
+
+            <!-- Container onde os itens lidos são inseridos -->
+            <div id="resultado-container"></div>
+        </div>
+
+    </div>
 </div>
+{% endblock %}
+
+{% block scripts %}
+<script src="{{ url_for('static', filename='upload.js') }}" defer></script>
 {% endblock %}

@@ -167,7 +167,32 @@ body::before {
   background: var(--ink-700);
   color: var(--steel-100) !important;
 }
+/* Agrupa a pílula e o botão de sair, à direita do header */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
 
+/* Link de logout: discreto, fora da pílula */
+.logout-link {
+  padding: 8px 14px;
+  border-radius: 999px;
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--steel-500);
+  transition: color 0.15s ease, background-color 0.15s ease;
+}
+
+.logout-link:hover {
+  color: var(--steel-100);
+  background: var(--ink-800);
+}
+
+.logout-link:focus-visible {
+  outline: 2px solid var(--steel-400);
+  outline-offset: 2px;
+}
 /* Menu Mobile Toggle */
 .nav-toggle {
   display: none;
@@ -215,11 +240,16 @@ body::before {
     flex-wrap: wrap; /* Permite que os itens quebrem a linha se não houver espaço */
     justify-content: space-between; 
   }
+
+    .header-actions {
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 10px;
+  }
   
   /* Mantém a navbar com aparência de pílula, mas centralizada abaixo da logo no mobile */
   .main-nav {
-    width: 100%;
+    flex: 1;
     justify-content: center;
-    margin-top: 10px; 
   }
 }

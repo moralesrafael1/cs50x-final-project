@@ -56,7 +56,7 @@ def register():
         if not request.form.get("email"):
             return error("type your email", 400)
         if request.form.get("password") != request.form.get("confirm_password"):
-            return error("type your password", 400)
+            return error("Passwords do not match", 400)
         else:
             username = request.form.get("username")
             password = request.form.get("password")
@@ -68,5 +68,9 @@ def register():
             return redirect ("/home")
         except ValueError:
             return error("Username already in use", 400)
-    
+
+@app.route("/logout")
+def logout():
+    session.clear()
+    return redirect(url_for("index"))
 
