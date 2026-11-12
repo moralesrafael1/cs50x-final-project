@@ -22,52 +22,94 @@
         <!-- Coluna esquerda: resumo + upload -->
         <div class="up-side">
 
-            <!-- Caixa de Resumo -->
+            <!-- Caixa de Resumo (valores calculados no servidor, a partir do banco) -->
             <div class="caixa">
-                <p class="caixa__label">Total Gasto no Mês</p>
-                <p class="caixa__value" id="total-mes">R$ 0,00</p>
-                <p class="caixa__count"><span id="total-lidos">0</span> Comprovantes lidos</p>
+                <p class="caixa__label">Total registrado</p>
+                <p class="caixa__value" id="total-mes">{{ resumo.total_cents | brl }}</p>
+                <p class="caixa__count"><span id="total-lidos">{{ resumo.notas }}</span> Comprovantes lidos</p>
             </div>
 
             <!-- Área de Upload -->
             <div class="upload" id="dropzone">
-                <input class="foto" type="file" id="foto-comprovante" accept="image/*,application/pdf" capture="camera" onchange="lerfoto()">
-                <label for="foto-comprovante" class="botao-tracejado">
-                    <span class="upload-icon">🧾</span>
-                    <span class="botao-tracejado__text">Toque para fazer upload da nota fiscal</span>
-                    <span class="botao-tracejado__hint">ou arraste a imagem até aqui</span>
-                </label>
+                <!-- id no form: o upload.js poderá interceptar o "submit" no futuro (fetch) -->
+                <form id="form-upload" action="{{ url_for('upload') }}" method="POST" enctype="multipart/form-data">
 
-                <!-- Pré-visualização (aparece após escolher o arquivo) -->
-                <div class="up-preview" id="up-preview" hidden>
-                    <div class="up-preview__thumb" id="up-thumb"></div>
-                    <div class="up-preview__meta">
-                        <strong id="up-name"></strong>
-                        <span id="up-size"></span>
+                    <!--
+                        name="foto"  -> é a chave que o Flask lê em request.files.get("foto")
+                        sem onchange -> o upload.js registra o evento "change" via addEventListener
+                        sem capture  -> no celular o usuário escolhe entre câmera e galeria
+                    -->
+                    <input class="foto" type="file" id="foto-comprovante" name="foto"
+                           accept="image/jpeg,image/png,image/webp">
+
+                    <label for="foto-comprovante" class="botao-tracejado">
+                        <span class="upload-icon" aria-hidden="true">🧾</span>
+                        <span class="botao-tracejado__text">Toque para fazer upload da nota fiscal</span>
+                        <span class="botao-tracejado__hint">ou arraste a imagem até aqui (JPG, PNG ou WEBP)</span>
+                    </label>
+
+                    <!-- Pré-visualização (aparece após escolher o arquivo) -->
+                    <div class="up-preview" id="up-preview" hidden>
+                        <div class="up-preview__thumb" id="up-thumb"></div>
+                        <div class="up-preview__meta">
+                            <strong id="up-name"></strong>
+                            <span id="up-size"></span>
+                        </div>
+                        <div class="up-preview__actions">
+                            <!-- Gatilho de envio: sem ele, nenhum POST chega ao Flask -->
+                            <button type="submit" class="up-link">Ler nota</button>
+                            <label for="foto-comprovante" class="up-link">Trocar</label>
+                            <button type="button" class="up-link" id="up-remove">Remover</button>
+                        </div>
+                        <div class="up-preview__busy" id="up-busy" role="status" hidden>
+                            <span class="up-spinner" aria-hidden="true"></span> Lendo comprovante…
+                        </div>
                     </div>
-                    <div class="up-preview__actions">
-                        <label for="foto-comprovante" class="up-link">Trocar</label>
-                        <button type="button" class="up-link" id="up-remove">Remover</button>
-                    </div>
-                    <div class="up-preview__busy" id="up-busy" hidden>
-                        <span class="up-spinner" aria-hidden="true"></span> Lendo comprovante…
-                    </div>
-                </div>
+                </form>
             </div>
         </div>
 
-        <!-- Coluna direita: resultados -->
+        <!-- Coluna direita: as últimas notas enviadas -->
         <div class="up-main">
-            <!-- Estado vazio (some quando o primeiro comprovante é renderizado) -->
+            {% if not recentes %}
+            <!-- Estado vazio (só aparece enquanto não há notas) -->
             <div class="up-empty" id="resultado-vazio">
                 <div class="up-empty__ghost" aria-hidden="true">
                     <span></span><span></span><span></span>
                 </div>
                 <p>Seus comprovantes lidos aparecerão aqui</p>
             </div>
+            {% endif %}
 
-            <!-- Container onde os itens lidos são inseridos -->
-            <div id="resultado-container"></div>
+            <!-- Container das notas (o id é usado também pelo upload.js) -->
+            <div id="resultado-container">
+                {% for nota in recentes %}
+                <div class="card-comprovante">
+                    <div class="estabelecimento">
+                        <a href="{{ url_for('receipt', receipt_id=nota.id) }}">{{ nota.store_name }}</a>
+                    </div>
+                    <div class="lista-itens">
+                        {% for item in nota["itens"][:5] %}
+                        <div class="item-linha">
+                            <span>{{ item.quantity | qtd }}x {{ item.description }}</span>
+                            <span>{{ item.total_price_cents | brl }}</span>
+                        </div>
+                        {% endfor %}
+                        {% if nota["itens"] | length > 5 %}
+                        <div class="item-linha">
+                            <span>+ {{ nota["itens"] | length - 5 }} itens</span>
+                            <span></span>
+                        </div>
+                        {% endif %}
+                    </div>
+                    <hr class="divisor">
+                    <div class="total-nota-linha">
+                        <span>Total</span>
+                        <span>{{ nota.total_cents | brl }}</span>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
         </div>
 
     </div>

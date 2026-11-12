@@ -1,0 +1,7 @@
+{% extends "layout.html" %}
+{% block title %}Nota registrada{% endblock %}
+{% block content %}
+<h1>Tudo certo!</h1>
+<p>{{ message }}</p>
+<a href="{{ url_for('upload') }}">Enviar outra nota</a>
+{% endblock %}

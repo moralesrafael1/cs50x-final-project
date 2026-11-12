@@ -1,0 +1,383 @@
+/* =============================================================
+   MERIDIAN — Painel (home.html), Nota (receipt.html), Conta (account.html)
+   Usa os tokens de style.css. Classes novas com prefixo .db-
+   ============================================================= */
+
+.db-page {
+    width: 100%;
+    max-width: 1000px;
+    padding: 40px 12px 56px;
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+}
+
+.db-page--narrow { max-width: 640px; }
+
+/* ---------- Cabeçalho da página ---------- */
+.db-head {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: flex-end;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.db-head__title {
+    font-family: var(--font-display);
+    font-size: clamp(32px, 5vw, 56px);
+    font-weight: 700;
+    line-height: 1.05;
+    letter-spacing: -0.02em;
+    margin: 0 0 12px;
+    background: var(--silver-grad);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+}
+
+.db-head__subtitle {
+    margin: 0;
+    max-width: 52ch;
+    font-size: 16px;
+    line-height: 1.6;
+    color: var(--steel-300);
+}
+
+.db-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+}
+
+/* ---------- Botões e links ---------- */
+.db-btn {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 26px;
+    border: 1.5px solid transparent;
+    border-radius: 999px;
+    background: var(--silver-grad);
+    color: var(--ink-950);
+    font-size: 15px;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: background 0.15s ease, border-color 0.15s ease, transform 0.15s ease;
+}
+.db-btn:hover { background: var(--silver-grad-hover); transform: translateY(-2px); }
+
+.db-btn--ghost {
+    background: transparent;
+    color: var(--steel-100);
+    border-color: var(--ink-600);
+}
+.db-btn--ghost:hover { background: rgba(255, 255, 255, 0.05); border-color: var(--steel-300); }
+
+/* Variante para fundos claros (cartões .db-card) */
+.db-btn--dark { background: var(--ink-900); color: var(--steel-100); }
+.db-btn--dark:hover { background: var(--ink-600); }
+
+.db-link {
+    color: var(--steel-100);
+    font-weight: 600;
+    text-decoration: underline;
+    text-decoration-color: var(--ink-600);
+    text-underline-offset: 3px;
+    transition: text-decoration-color 0.15s ease;
+}
+.db-link:hover { text-decoration-color: var(--steel-300); }
+
+.db-btn:focus-visible,
+.db-link:focus-visible {
+    outline: 2px solid var(--steel-100);
+    outline-offset: 3px;
+}
+.db-card .db-btn:focus-visible { outline-color: var(--ink-800); }
+
+/* ---------- Cards de resumo ---------- */
+.db-stats {
+    display: grid;
+    grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr) minmax(0, 1fr);
+    gap: 16px;
+}
+
+.db-stat {
+    padding: 24px;
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius-lg);
+    color: var(--panel-ink);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 15px 30px -10px rgba(0, 0, 0, 0.3);
+}
+
+.db-stat__label {
+    margin: 0 0 6px;
+    font-size: 13.5px;
+    font-weight: 600;
+    color: var(--panel-ink-soft);
+}
+
+.db-stat__value {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: clamp(26px, 4vw, 38px);
+    font-weight: 700;
+    letter-spacing: -0.02em;
+    color: var(--ink-950);
+    font-variant-numeric: tabular-nums;
+    overflow-wrap: anywhere;
+}
+
+/* ---------- Painéis escuros ---------- */
+.db-panel {
+    padding: 28px;
+    background: var(--ink-900);
+    border: 1px solid var(--ink-700);
+    border-radius: var(--radius-lg);
+}
+
+.db-panel__title {
+    margin: 0 0 4px;
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--steel-100);
+}
+
+.db-panel__hint {
+    margin: 0 0 24px;
+    font-size: 13.5px;
+    color: var(--steel-400);
+}
+
+/* ---------- Gráfico de barras (CSS puro) ---------- */
+.db-chart {
+    display: flex;
+    align-items: flex-end;
+    gap: 12px;
+}
+
+.db-bar {
+    flex: 1 1 0;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+
+.db-bar__valor {
+    font-family: var(--font-display);
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--steel-300);
+    white-space: nowrap;
+    font-variant-numeric: tabular-nums;
+}
+
+.db-bar__trilho {
+    width: 100%;
+    max-width: 64px;
+    height: 160px;
+    display: flex;
+    align-items: flex-end;
+    border-radius: 10px;
+    background: var(--ink-800);
+    overflow: hidden;
+}
+
+.db-bar__fill {
+    width: 100%;
+    min-height: 4px;
+    border-radius: 10px 10px 0 0;
+    background: var(--silver-grad);
+    transform-origin: bottom;
+    animation: db-crescer 0.6s ease both;
+}
+
+.db-bar__mes {
+    font-size: 12px;
+    color: var(--steel-400);
+}
+
+@keyframes db-crescer {
+    from { transform: scaleY(0); }
+    to { transform: none; }
+}
+
+/* ---------- Tabelas ---------- */
+.db-table-wrap {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+}
+
+.db-table,
+.db-items {
+    width: 100%;
+    min-width: 480px;
+    border-collapse: collapse;
+    font-size: 14.5px;
+    font-variant-numeric: tabular-nums;
+}
+
+.db-table th,
+.db-items th {
+    padding: 0 10px 12px;
+    text-align: left;
+    font-size: 12.5px;
+    font-weight: 600;
+}
+
+.db-table td,
+.db-items td {
+    padding: 14px 10px;
+    vertical-align: top;
+}
+
+.db-num { text-align: right; }
+.db-table th.db-num,
+.db-items th.db-num { text-align: right; }
+
+/* Tabela escura (painel) */
+.db-table th { color: var(--steel-400); border-bottom: 1px solid var(--ink-700); }
+.db-table td { color: var(--steel-300); border-bottom: 1px solid var(--ink-800); }
+.db-table tbody tr { transition: background 0.15s ease; }
+.db-table tbody tr:hover { background: var(--ink-800); }
+.db-table tbody tr:last-child td { border-bottom: none; }
+.db-strong { color: var(--steel-100) !important; font-weight: 600; }
+
+/* Tabela clara (cartão da nota) */
+.db-items th { color: var(--panel-ink-soft); padding-top: 12px; }
+.db-items td { color: var(--panel-ink); border-top: 1px solid var(--panel-border); }
+
+/* ---------- Estado vazio ---------- */
+.db-empty {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 18px;
+    padding: 40px 16px;
+    border: 1.5px dashed var(--ink-600);
+    border-radius: var(--radius-md);
+    text-align: center;
+    color: var(--steel-400);
+}
+.db-empty p { margin: 0; max-width: 46ch; }
+
+/* ---------- Cartão claro (nota e conta) ---------- */
+.db-card {
+    padding: 28px;
+    background: var(--panel-bg);
+    border: 1px solid var(--panel-border);
+    border-radius: var(--radius-lg);
+    color: var(--panel-ink);
+    box-shadow: 0 1px 0 rgba(255, 255, 255, 0.6) inset, 0 15px 30px -10px rgba(0, 0, 0, 0.3);
+}
+
+.db-card__head {
+    padding-bottom: 16px;
+    margin-bottom: 4px;
+    border-bottom: 1.5px dashed var(--steel-300);
+}
+
+.db-card__title {
+    margin: 0;
+    font-family: var(--font-display);
+    font-size: 22px;
+    font-weight: 700;
+    color: var(--ink-950);
+    overflow-wrap: anywhere;
+}
+
+.db-card__meta {
+    margin: 4px 0 0;
+    font-size: 13.5px;
+    color: var(--panel-ink-soft);
+}
+
+.db-card__total {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 16px;
+    margin-top: 8px;
+    padding-top: 16px;
+    border-top: 1.5px dashed var(--steel-300);
+    font-family: var(--font-display);
+    font-size: 20px;
+    font-weight: 700;
+    color: var(--ink-950);
+    font-variant-numeric: tabular-nums;
+}
+
+.db-card__footer {
+    margin-top: 24px;
+    padding-top: 20px;
+    border-top: 1px solid var(--panel-border);
+}
+
+/* Conferência soma x total */
+.db-check {
+    margin: 16px 0 0;
+    padding: 10px 16px;
+    border-radius: var(--radius-sm);
+    font-size: 13.5px;
+    font-weight: 500;
+    line-height: 1.5;
+}
+.db-check--ok { background: rgba(111, 191, 139, 0.16); color: #2f6f47; }
+.db-check--warn { background: rgba(240, 163, 94, 0.2); color: #85501b; }
+
+/* ---------- Mensagem flash ---------- */
+.db-flash {
+    margin: 0;
+    padding: 14px 18px;
+    border: 1px solid var(--ink-600);
+    border-radius: var(--radius-md);
+    background: var(--ink-800);
+    color: var(--steel-100);
+    font-size: 14.5px;
+}
+
+/* ---------- Dados da conta ---------- */
+.db-fields {
+    margin: 0;
+    display: grid;
+    gap: 20px;
+}
+.db-fields dt {
+    margin: 0 0 4px;
+    font-size: 13px;
+    font-weight: 600;
+    color: var(--panel-ink-soft);
+}
+.db-fields dd {
+    margin: 0;
+    font-size: 17px;
+    color: var(--ink-950);
+    overflow-wrap: anywhere;
+}
+
+/* ---------- Responsividade ---------- */
+@media (max-width: 760px) {
+    .db-stats { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+    .db-stat--wide { grid-column: 1 / -1; }
+    .db-panel, .db-card { padding: 22px 18px; }
+}
+
+@media (max-width: 520px) {
+    .db-page { padding-top: 28px; }
+    .db-head .db-btn, .db-actions { width: 100%; }
+    .db-actions .db-btn { flex: 1; }
+    .db-chart { gap: 6px; }
+    .db-bar__valor { display: none; } /* valor continua no title de cada barra */
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .db-btn, .db-link, .db-table tbody tr { transition: none; }
+    .db-btn:hover { transform: none; }
+    .db-bar__fill { animation: none; }
+}

@@ -1,7 +1,98 @@
 {% extends "layout.html" %}
 
-{% block content %}
-esse é a home
+{% block title %}Painel — Meridian{% endblock %}
 
-<a href="{{ url_for('upload') }}">Registre gastos</a>
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="db-page">
+
+    <header class="db-head">
+        <div>
+            <h1 class="db-head__title">SEU PAINEL</h1>
+            <p class="db-head__subtitle">Olá, {{ username }}. Aqui está tudo o que a IA já leu dos seus comprovantes.</p>
+        </div>
+        <a href="{{ url_for('upload') }}" class="db-btn">Adicionar nota</a>
+    </header>
+
+    <!-- Resumo -->
+    <section class="db-stats" aria-label="Resumo dos seus gastos">
+        <div class="db-stat db-stat--wide">
+            <p class="db-stat__label">Total registrado</p>
+            <p class="db-stat__value">{{ resumo.total_cents | brl }}</p>
+        </div>
+        <div class="db-stat">
+            <p class="db-stat__label">Notas lidas</p>
+            <p class="db-stat__value">{{ resumo.notas }}</p>
+        </div>
+        <div class="db-stat">
+            <p class="db-stat__label">Itens extraídos</p>
+            <p class="db-stat__value">{{ resumo.itens }}</p>
+        </div>
+    </section>
+
+    {% if notas %}
+
+    <!-- Gráfico: barras em CSS puro, alturas calculadas no Python -->
+    <section class="db-panel" aria-labelledby="titulo-grafico">
+        <h2 class="db-panel__title" id="titulo-grafico">Gastos por mês</h2>
+        <p class="db-panel__hint">
+            {% if meses | length == 1 %}O mês com compras registradas{% else %}Os últimos {{ meses | length }} meses com compras{% endif %}, pela data impressa no cupom.
+        </p>
+        <div class="db-chart">
+            {% for m in meses %}
+            <div class="db-bar" title="{{ m.rotulo }}: {{ m.total_cents | brl }}">
+                <span class="db-bar__valor">{{ m.total_cents | brl }}</span>
+                <div class="db-bar__trilho" aria-hidden="true">
+                    <div class="db-bar__fill" style="height: {{ m.pct }}%"></div>
+                </div>
+                <span class="db-bar__mes">{{ m.rotulo }}</span>
+            </div>
+            {% endfor %}
+        </div>
+    </section>
+
+    <!-- Todas as notas do usuário -->
+    <section class="db-panel" aria-labelledby="titulo-notas">
+        <h2 class="db-panel__title" id="titulo-notas">Suas notas</h2>
+        <p class="db-panel__hint">Da última enviada para a primeira. Abra uma nota para ver todos os itens.</p>
+        <div class="db-table-wrap">
+            <table class="db-table">
+                <thead>
+                    <tr>
+                        <th scope="col">Estabelecimento</th>
+                        <th scope="col">Data da compra</th>
+                        <th scope="col" class="db-num">Itens</th>
+                        <th scope="col" class="db-num">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for n in notas %}
+                    <tr>
+                        <td><a class="db-link" href="{{ url_for('receipt', receipt_id=n.id) }}">{{ n.store_name }}</a></td>
+                        <td>{{ n.purchase_date | data_br }}</td>
+                        <td class="db-num">{{ n.itens }}</td>
+                        <td class="db-num db-strong">{{ n.total_cents | brl }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </section>
+
+    {% else %}
+
+    <!-- Estado vazio: convite para a primeira ação -->
+    <section class="db-panel">
+        <div class="db-empty">
+            <p>Você ainda não enviou nenhuma nota. Fotografe um cupom fiscal e a IA organiza os itens para você.</p>
+            <a href="{{ url_for('upload') }}" class="db-btn">Enviar a primeira nota</a>
+        </div>
+    </section>
+
+    {% endif %}
+
+</div>
 {% endblock %}

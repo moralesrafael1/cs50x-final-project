@@ -1,0 +1,78 @@
+{% extends "layout.html" %}
+
+{% block title %}{{ nota.store_name }} — Meridian{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="db-page">
+
+    <!-- Mensagem do upload (padrão Post/Redirect/Get) -->
+    {% with mensagens = get_flashed_messages() %}
+    {% for mensagem in mensagens %}
+    <p class="db-flash" role="status">{{ mensagem }}</p>
+    {% endfor %}
+    {% endwith %}
+
+    <header class="db-head">
+        <div>
+            <h1 class="db-head__title">NOTA FISCAL</h1>
+            <p class="db-head__subtitle">Itens lidos pela IA a partir da sua foto.</p>
+        </div>
+        <div class="db-actions">
+            <a href="{{ url_for('home') }}" class="db-btn db-btn--ghost">Voltar ao painel</a>
+            <a href="{{ url_for('upload') }}" class="db-btn">Enviar outra nota</a>
+        </div>
+    </header>
+
+    <article class="db-card">
+        <header class="db-card__head">
+            <h2 class="db-card__title">{{ nota.store_name }}</h2>
+            <p class="db-card__meta">
+                Compra em {{ nota.purchase_date | data_br }}, {{ itens | length }} {{ 'item' if itens | length == 1 else 'itens' }}
+            </p>
+        </header>
+
+        <div class="db-table-wrap">
+            <table class="db-items">
+                <thead>
+                    <tr>
+                        <th scope="col">Descrição</th>
+                        <th scope="col" class="db-num">Qtd</th>
+                        <th scope="col" class="db-num">Unitário</th>
+                        <th scope="col" class="db-num">Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for item in itens %}
+                    <tr>
+                        <td>{{ item.description }}</td>
+                        <td class="db-num">{{ item.quantity | qtd }}</td>
+                        <td class="db-num">{{ item.unit_price_cents | brl }}</td>
+                        <td class="db-num">{{ item.total_price_cents | brl }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <div class="db-card__total">
+            <span>Total da nota</span>
+            <span>{{ nota.total_cents | brl }}</span>
+        </div>
+
+        <!-- Conferência informativa: não bloqueia nada, só mostra -->
+        {% if diferenca == 0 %}
+        <p class="db-check db-check--ok">A soma dos itens confere com o total da nota.</p>
+        {% else %}
+        <p class="db-check db-check--warn">
+            A soma dos itens ({{ soma_itens | brl }}) difere do total em {{ diferenca | abs | brl }}.
+            Pode haver um desconto ou item que o OCR não leu.
+        </p>
+        {% endif %}
+    </article>
+
+</div>
+{% endblock %}

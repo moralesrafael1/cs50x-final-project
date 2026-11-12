@@ -1,6 +1,4 @@
-/* Meridian — interface da página de upload.
-   Só cuida da parte visual (pré-visualização, arrastar e soltar, cartões de resultado).
-   O envio/leitura do comprovante NÃO está aqui: veja o ponto "FUTURO" em lerfoto(). */
+
 (function () {
     var input = document.getElementById('foto-comprovante');
     var zone = document.getElementById('dropzone');
@@ -51,21 +49,13 @@
         zone.classList.add('has-file');
     }
 
-    /* Chamada pelo onchange do input (nome mantido do código original) */
     window.lerfoto = function () {
         var file = input.files && input.files[0];
         if (!file) { limparSelecao(); return; }
         mostrarPreview(file);
-
-        /* FUTURO: aqui entra o envio ao Python, por exemplo:
-             setProcessando(true);
-             fetch('/upload', { method: 'POST', body: formData })
-                 .then(r => r.json())
-                 .then(d => { renderComprovante(d); limparSelecao(); })
-                 .finally(() => setProcessando(false));
-        */
     };
 
+    input.addEventListener('change', window.lerfoto);
     /* Mostra/oculta o indicador "Lendo comprovante…" */
     window.setProcessando = function (on) { busy.hidden = !on; };
 

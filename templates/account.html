@@ -1,0 +1,41 @@
+{% extends "layout.html" %}
+
+{% block title %}Conta — Meridian{% endblock %}
+
+{% block head %}
+<link rel="stylesheet" href="{{ url_for('static', filename='dashboard.css') }}">
+{% endblock %}
+
+{% block content %}
+<div class="db-page db-page--narrow">
+
+    <header class="db-head">
+        <div>
+            <h1 class="db-head__title">SUA CONTA</h1>
+            <p class="db-head__subtitle">Os dados do seu cadastro no Meridian.</p>
+        </div>
+    </header>
+
+    <article class="db-card">
+        <dl class="db-fields">
+            <div>
+                <dt>Nome de usuário</dt>
+                <dd>{{ usuario.username }}</dd>
+            </div>
+            <div>
+                <dt>E-mail</dt>
+                <dd>{{ usuario.email }}</dd>
+            </div>
+            <div>
+                <dt>Notas registradas</dt>
+                <dd>{{ resumo.notas }}</dd>
+            </div>
+        </dl>
+
+        <div class="db-card__footer">
+            <a href="{{ url_for('logout') }}" class="db-btn db-btn--dark">Sair da conta</a>
+        </div>
+    </article>
+
+</div>
+{% endblock %}
